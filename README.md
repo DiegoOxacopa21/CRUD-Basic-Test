@@ -1,58 +1,72 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# CRUD de Estudiantes
 
-## About Laravel
+Aplicación CRUD básica desarrollada con **Laravel 13** y **PostgreSQL** para la gestión de estudiantes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Funcionalidades
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Crear** — Registrar nuevos estudiantes con código, nombres, apellidos, edad y correo
+- **Listar** — Visualizar todos los estudiantes en una tabla
+- **Actualizar** — Editar la información de un estudiante existente
+- **Eliminar** — Eliminar un estudiante del sistema
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tecnologías
 
-## Learning Laravel
+- Laravel 13
+- PHP 8.3+
+- PostgreSQL
+- Bootstrap 4
+- jQuery
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requisitos
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.3
+- Composer
+- PostgreSQL
+- Node.js (para compilar assets con Vite)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Instalación
 
 ```bash
-composer require laravel/boost --dev
+# Clonar el repositorio
+git clone <repo-url>
+cd CRUD
 
-php artisan boost:install
+# Instalar dependencias de PHP
+composer install
+
+# Copiar archivo de entorno y generar APP_KEY
+cp .env.example .env
+php artisan key:generate
+
+# Configurar la base de datos en .env
+# DB_CONNECTION=pgsql
+# DB_DATABASE=pilot_crud
+# DB_USERNAME=postgres
+# DB_PASSWORD=postgres
+
+# Ejecutar migraciones
+php artisan migrate
+
+# Instalar dependencias frontend y compilar
+npm install
+npm run build
+
+# Iniciar servidor
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Rutas
 
-## Contributing
+| Método | URI | Acción |
+|--------|-----|--------|
+| GET | `/` | Página de inicio |
+| GET | `/students` | Listar estudiantes |
+| POST | `/students` | Crear estudiante |
+| PUT/PATCH | `/students/{id}` | Actualizar estudiante |
+| DELETE | `/students/{id}` | Eliminar estudiante |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Licencia
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT](https://opensource.org/licenses/MIT)

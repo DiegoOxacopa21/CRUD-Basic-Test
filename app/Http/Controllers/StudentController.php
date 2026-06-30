@@ -9,10 +9,6 @@ class StudentController extends Controller
 {
 
 
-    public function getStudentById(string $id) {
-        return Student::findOrFail($id);
-    }
-
     public function store(Request $request) {
         $validated = $request->validate(
             [
@@ -32,7 +28,7 @@ class StudentController extends Controller
 
     public function update(Request $request, string $id) {
         $validated = $request->validate([
-            'codigo'    => 'required',
+            'codigo'    => 'required|unique:students,codigo,' . $id,
             'name'      => 'required',
             'surname'   => 'required',
             'age'       => 'required|numeric',
