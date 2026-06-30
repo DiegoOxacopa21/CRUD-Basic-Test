@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout()
+    }
+
     environment {
         APP_ENV = 'testing'
         DB_CONNECTION = 'sqlite'
@@ -14,7 +18,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                bat """
+                    cd /d "C:\\Users\\diego\\Cursos\\PHP\\LearningProjects\\CRUD"
+                    xcopy /E /Y /I /Q "." "%WORKSPACE%\\" 2>nul
+                """
             }
         }
 
@@ -68,10 +75,6 @@ pipeline {
                 subject: "UNSTABLE: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build Unstable (tests failed)\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nBranch: ${env.BRANCH_NAME}"
             )
-        }
-
-        cleanup {
-            deleteDir()
         }
     }
 }
