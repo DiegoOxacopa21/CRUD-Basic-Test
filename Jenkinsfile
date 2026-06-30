@@ -20,8 +20,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 bat '''
-                    cd /d "C:\Users\diego\Cursos\PHP\LearningProjects\CRUD"
-                    php artisan test --log-junit=junit.xml
+                    cd /d "C:/Users/diego/Cursos/PHP/LearningProjects/CRUD"
+                    php artisan test --log-junit="%WORKSPACE%/junit.xml"
                 '''
             }
             post {
