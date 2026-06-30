@@ -3,7 +3,7 @@ pipeline {
 
     options {
         skipDefaultCheckout()
-        timeout(time: 10, unit: 'MINUTES')
+        timeout(time: 5, unit: 'MINUTES')
     }
 
     environment {
@@ -17,34 +17,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                bat """
-                    cd /d "C:\\Users\\diego\\Cursos\\PHP\\LearningProjects\\CRUD"
-                    xcopy /E /Y /I /Q "." "%WORKSPACE%\\" 2>nul
-                """
-            }
-        }
-
-        stage('Prepare Environment') {
-            steps {
-                bat '''
-                    copy .env.example .env /Y
-                    php artisan key:generate --force
-                '''
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                bat 'composer install --no-interaction --prefer-dist --no-scripts'
-                bat 'composer dump-autoload --no-scripts'
-            }
-        }
-
         stage('Run Tests') {
             steps {
-                bat 'php artisan test --log-junit=junit.xml'
+                bat '''
+                    cd /d "C:\Users\diego\Cursos\PHP\LearningProjects\CRUD"
+                    php artisan test --log-junit=junit.xml
+                '''
             }
             post {
                 always {
@@ -77,10 +55,6 @@ pipeline {
                 subject: "UNSTABLE: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build Unstable (tests failed)\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nBranch: ${env.BRANCH_NAME}"
             )
-        }
-
-        cleanup {
-            deleteDir()
         }
     }
 }
