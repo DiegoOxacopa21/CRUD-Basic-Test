@@ -37,7 +37,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat 'composer install --no-interaction --prefer-dist'
+                bat 'composer install --no-interaction --prefer-dist --no-scripts'
+                bat 'composer dump-autoload --no-scripts'
             }
         }
 
