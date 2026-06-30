@@ -3,6 +3,7 @@ pipeline {
 
     options {
         skipDefaultCheckout()
+        timeout(time: 10, unit: 'MINUTES')
     }
 
     environment {
@@ -25,18 +26,18 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                bat 'composer install --no-interaction --prefer-dist'
-            }
-        }
-
         stage('Prepare Environment') {
             steps {
                 bat '''
                     copy .env.example .env /Y
                     php artisan key:generate --force
                 '''
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'composer install --no-interaction --prefer-dist'
             }
         }
 
@@ -75,6 +76,10 @@ pipeline {
                 subject: "UNSTABLE: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build Unstable (tests failed)\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nBranch: ${env.BRANCH_NAME}"
             )
+        }
+
+        cleanup {
+            deleteDir()
         }
     }
 }
