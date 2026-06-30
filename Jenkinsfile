@@ -34,7 +34,7 @@ pipeline {
 
     post {
         success {
-            emailext(
+            mail(
                 to: 'diegooxacopa64@gmail.com',
                 subject: "SUCCESS: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build Successful!\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nBranch: ${env.BRANCH_NAME}"
@@ -42,7 +42,7 @@ pipeline {
         }
 
         failure {
-            emailext(
+            mail(
                 to: 'diegooxacopa64@gmail.com',
                 subject: "FAILED: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build Failed!\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nBranch: ${env.BRANCH_NAME}\nCheck console output."
@@ -50,7 +50,7 @@ pipeline {
         }
 
         unstable {
-            emailext(
+            mail(
                 to: 'diegooxacopa64@gmail.com',
                 subject: "UNSTABLE: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build Unstable (tests failed)\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nBranch: ${env.BRANCH_NAME}"
