@@ -12,7 +12,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progre
 
 FROM php:8.3-fpm-alpine
 
-RUN apk add --no-cache nginx && \
+RUN apk add --no-cache nginx postgresql-dev && \
     docker-php-ext-install pdo_pgsql pgsql mbstring bcmath
 
 COPY --from=node /app/public/build /var/www/html/public/build
