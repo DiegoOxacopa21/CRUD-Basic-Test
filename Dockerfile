@@ -8,18 +8,19 @@ RUN npm run build
 FROM composer:2 AS composer
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --no-scripts
 
 FROM php:8.3-fpm-alpine
 
-RUN apk add --no-cache nginx postgresql-dev && \
+RUN apk add --no-cache nginx postgresql-dev oniguruma-dev && \
     docker-php-ext-install pdo_pgsql pgsql mbstring bcmath
 
 COPY --from=node /app/public/build /var/www/html/public/build
 COPY --from=composer /app/vendor /var/www/html/vendor
 COPY . /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+RUN php artisan package:discover --ansi && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 RUN cat > /etc/nginx/nginx.conf << 'NGINX'
